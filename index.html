@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Madhura's Portfolio</title>
+  <style>
+    :root {
+      --primary: #ff6ec4;
+      --secondary: #7873f5;
+      --text: #ffffff;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      scroll-behavior: smooth;
+    }
+
+    body,
+    html {
+      width: 100%;
+      height: 100%;
+      font-family: 'Segoe UI', sans-serif;
+      overflow-x: hidden;
+      color: var(--text);
+    }
+
+    #vanta-bg {
+      position: fixed;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+    }
+
+    .cursor {
+      position: fixed;
+      width: 18px;
+      height: 18px;
+      border: 2px solid white;
+      border-radius: 50%;
+      pointer-events: none;
+      transform: translate(-50%, -50%);
+      transition: transform 0.1s ease-out;
+      z-index: 1000;
+    }
+
+    nav {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      background: rgba(0, 0, 0, 0.3);
+      display: flex;
+      justify-content: center;
+      gap: 25px;
+      padding: 12px;
+      z-index: 999;
+    }
+
+    nav a {
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+      font-size: 1rem;
+      padding: 6px 12px;
+      border-radius: 6px;
+      transition: background 0.3s ease;
+    }
+
+    nav a:hover {
+      background: rgba(255, 255, 255, 0.2);
+    }
+
+    header {
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 0 20px;
+    }
+
+    h1 {
+      font-size: 3.5rem;
+      background: linear-gradient(90deg, var(--primary), var(--secondary));
+      background-clip: text;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      color: transparent;
+      transition: transform 0.2s ease;
+    }
+
+    section.skills {
+      padding: 100px 20px;
+      background: rgba(0, 0, 0, 0.6);
+      text-align: center;
+    }
+
+    .skills h2 {
+      font-size: 2rem;
+      margin-bottom: 30px;
+    }
+
+    .skills-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      justify-content: center;
+      margin-top: 30px;
+    }
+
+  .skill-box {
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(10px);
+  border-radius: 14px;
+  padding: 20px 30px;
+  color: #fff;
+  font-size: 1.1rem;
+  font-weight: bold;
+  text-align: center;
+  transition: transform 0.3s ease, background 0.3s ease;
+  min-width: 120px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+ 
+}
+
+.skill-box.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.skill-box:hover {
+  transform: scale(1.05);
+  background: rgba(255, 255, 255, 0.15);
+} 
+
+  </style>
+</head>
+
+<body>
+  <div id="vanta-bg"></div>
+  <div class="cursor" id="cursor"></div>
+
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="about.html">About</a>
+    <a href="projects.html">Projects</a>
+    <a href="contact.html">Contact</a>
+  </nav>
+
+  <header>
+    <h1 id="hero">Hi, I'm Madhura — Creative Developer</h1>
+  </header>
+
+  <section class="skills" id="skills" style="position: relative; z-index: 1;">
+  <h2>My Skills</h2>
+  <div class="skills-grid">
+    <div class="skill-box">💻 HTML</div>
+    <div class="skill-box">🎨 CSS</div>
+    <div class="skill-box">⚡ JavaScript</div>
+    <div class="skill-box">🐍 Python</div>
+    <div class="skill-box">🧠 AI / ML</div>
+    <div class="skill-box">🛒 DBMS / SQL</div>
+   
+    <div class="skill-box">🧑‍💻 C & C++</div>
+    <div class="skill-box">🧩 Data Structures</div>
+  </div>
+</section>
+
+
+
+  <!-- VANTA + THREE.js Scripts -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r121/three.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.net.min.js"></script>
+
+  <script>
+    // Galaxy-like animated background
+    VANTA.NET({
+      el: "#vanta-bg",
+      mouseControls: true,
+      touchControls: true,
+      minHeight: 200.00,
+      minWidth: 200.00,
+      scale: 1.0,
+      scaleMobile: 1.0,
+      color: 0xff6ec4,
+      backgroundColor: 0x0f0f1a,
+      points: 10.0,
+      maxDistance: 22.0,
+      spacing: 18.0
+    });
+
+    // Custom cursor movement
+    const cursor = document.getElementById("cursor");
+    document.addEventListener("mousemove", (e) => {
+      cursor.style.transform = `translate(${e.clientX}px, ${e.clientY}px)`;
+      const x = (e.clientX - window.innerWidth / 2) / 40;
+      const y = (e.clientY - window.innerHeight / 2) / 40;
+      document.getElementById("hero").style.transform = `translate(${x}px, ${y}px)`;
+    });
+
+  
+  const skillBoxes = document.querySelectorAll('.skill-box');
+
+function revealSkills() {
+  skillBoxes.forEach((box) => {
+    const rect = box.getBoundingClientRect();
+    if (rect.top < window.innerHeight - 100) {
+      box.classList.add("visible");
+    }
+  });
+}
+
+// Run once when page loads
+window.addEventListener("load", revealSkills);
+
+// Run every time you scroll
+window.addEventListener("scroll", revealSkills);
+
+</script>
+
+</body>
+
+</html>
